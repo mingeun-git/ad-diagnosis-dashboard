@@ -1,0 +1,8 @@
+# ⚠️ streamlit 은 1.50 이상이어야 한다.
+#    .streamlit/config.toml 의 fontFaces / baseRadius / chartCategoricalColors 등
+#    KRDS 테마 매핑에 쓰는 옵션이 1.46+ 에서 추가됐고, 로컬 검증도 1.50 에서 했다.
+streamlit>=1.50
+pandas>=2.0
+pyarrow>=14
+google-cloud-bigquery>=3.0
+db-dtypes>=1.0

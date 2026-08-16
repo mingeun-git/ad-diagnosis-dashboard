@@ -1,0 +1,92 @@
+# KRDS(대한민국 정부 디자인 시스템) v1.0.0 — Streamlit 네이티브 테마 매핑
+#
+# 색·서체·모서리처럼 Streamlit 이 자체적으로 지원하는 항목은 여기서 지정한다.
+# CSS 로만 덮으면 위젯 내부(드롭다운·달력 등 포털로 렌더되는 요소)까지는 못 미치기 때문이다.
+# 여기서 못 하는 레이아웃·컴포넌트는 dashboard/krds.py 가 담당한다.
+#
+# 토큰 출처: github.com/KRDS-uiux/krds-uiux → resources/css/token/krds_tokens.css
+#           (원본 사본: dashboard/krds_tokens_reference.css)
+# ⚠️ theme 의 세부 옵션(fontFaces·baseRadius·chart*Colors 등)은 Streamlit 1.46+ 필요.
+#    requirements.txt 에 streamlit>=1.50 으로 핀을 박아 뒀다.
+
+[theme]
+base = "light"
+
+primaryColor            = "#256ef4"   # krds primary-50  (정부 상징 블루)
+backgroundColor         = "#ffffff"   # krds gray-0
+secondaryBackgroundColor = "#f4f5f6"  # krds gray-5
+textColor               = "#1e2124"   # krds gray-90
+linkColor               = "#0b50d0"   # krds primary-60 (본문 대비 4.5:1 이상)
+codeBackgroundColor     = "#f4f5f6"
+
+borderColor                    = "#cdd1d5"  # krds gray-20
+dataframeBorderColor           = "#e6e8ea"  # krds gray-10
+dataframeHeaderBackgroundColor = "#f4f5f6"  # krds gray-5
+showWidgetBorder               = true
+
+# KRDS 표준 모서리 6px (--krds-radius-medium1 = 0.6rem, 1rem=10px 기준)
+baseRadius   = "6px"
+buttonRadius = "6px"
+
+# 서체 — Pretendard GOV. 서브셋에 없는 글자는 Pretendard → 시스템 폰트로 폴백된다.
+font        = "Pretendard GOV, Pretendard, sans-serif"
+headingFont = "Pretendard GOV, Pretendard, sans-serif"
+baseFontSize = 16
+
+# KRDS PC 타이포 스케일(heading large 32px ~ xxsmall 15px)을 h1~h6 에 매핑
+headingFontSizes   = ["2rem", "1.5rem", "1.1875rem", "1.0625rem", "0.9375rem", "0.8125rem"]
+headingFontWeights = [700, 700, 700, 700, 700, 700]
+
+# 시스템 컬러 — st.info/success/warning/error 및 마크다운 색상 지시자에 쓰인다
+redColor    = "#de3412"   # danger-50
+orangeColor = "#9e6a00"   # warning-50
+yellowColor = "#ffb114"   # warning-30
+greenColor  = "#228738"   # success-50
+blueColor   = "#256ef4"   # primary-50
+violetColor = "#346fb2"   # secondary-50
+grayColor   = "#58616a"   # gray-60
+
+redBackgroundColor    = "#fdefec"
+orangeBackgroundColor = "#fff3db"
+yellowBackgroundColor = "#fff3db"
+greenBackgroundColor  = "#eaf6ec"
+blueBackgroundColor   = "#ecf2fe"
+violetBackgroundColor = "#eef2f7"
+grayBackgroundColor   = "#f4f5f6"
+
+redTextColor    = "#bd2c0f"
+orangeTextColor = "#8a5c00"
+yellowTextColor = "#8a5c00"
+greenTextColor  = "#267337"
+blueTextColor   = "#0b50d0"
+violetTextColor = "#052b57"
+grayTextColor   = "#464c53"
+
+# 차트 — KRDS primary/graphic/system 팔레트. krds.py 의 CHART_CATEGORICAL 과 같은 순서다.
+chartCategoricalColors = [
+  "#256ef4", "#61758f", "#0b78cb", "#d63d4a", "#228738",
+  "#9e6a00", "#346fb2", "#98acc5", "#86aff9", "#223a58",
+]
+# 연속형 — primary 5 → 90 (밝음 → 어두움)
+chartSequentialColors = [
+  "#ecf2fe", "#d8e5fd", "#b1cefb", "#86aff9", "#4c87f6",
+  "#256ef4", "#0b50d0", "#083891", "#052561", "#03163a",
+]
+
+[[theme.fontFaces]]
+family = "Pretendard GOV"
+url    = "https://cdn.jsdelivr.net/gh/KRDS-uiux/krds-uiux@main/resources/fonts/PretendardGOV-Regular.subset.woff2"
+weight = 400
+style  = "normal"
+
+[[theme.fontFaces]]
+family = "Pretendard GOV"
+url    = "https://cdn.jsdelivr.net/gh/KRDS-uiux/krds-uiux@main/resources/fonts/PretendardGOV-Medium.subset.woff2"
+weight = 500
+style  = "normal"
+
+[[theme.fontFaces]]
+family = "Pretendard GOV"
+url    = "https://cdn.jsdelivr.net/gh/KRDS-uiux/krds-uiux@main/resources/fonts/PretendardGOV-Bold.subset.woff2"
+weight = 700
+style  = "normal"
