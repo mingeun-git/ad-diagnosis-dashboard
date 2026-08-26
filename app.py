@@ -580,6 +580,24 @@ elif PAGE == "sys_abuse":
                story.ABUSE_LINK_SILVER_LINING)
     krds.note(story.ABUSE_LINK_HONESTY)
 
+    # ── ⑨-C-2 민감도 검정 — 이 기각이 우리 규칙 탓인가
+    krds.section("이 기각이 우리가 정한 규칙 때문은 아닌가", "정의 3가지로 다시 재봤다")
+    krds.alert("warning", "판정의 약점을 먼저 말한다", story.ABUSE_SENSITIVITY_WHY)
+    sn = pd.DataFrame([(d, r, n, k, v) for d, r, n, k, v in story.ABUSE_SENSITIVITY],
+                      columns=["등급 정의", "규칙", "30클릭+ 정상 (%)",
+                               "30클릭+ 위험 (%)", "판정"])
+    st.dataframe(sn.style.format({"30클릭+ 정상 (%)": "{:.2f}",
+                                  "30클릭+ 위험 (%)": "{:.2f}"}),
+                 width="stretch", hide_index=True,
+                 column_config={"규칙": st.column_config.TextColumn(width="large")})
+    krds.quote(story.ABUSE_SENSITIVITY_VERDICT, "success")
+    krds.note(story.ABUSE_PERCENTILE_TEST)
+
+    krds.section("팀원 1 에게 남은 요청", "3건 → 1건으로 줄었다")
+    for name, state, tone, why in story.ABUSE_REQUESTS:
+        krds.alert(tone if tone != "success" else "information",
+                   f"{name} — {state}", why)
+
     # ── ⑨-D 범위 대조
     krds.section("두 시스템의 범위 대조", "어디까지 같고, 어디서 갈리고, 무엇을 맞췄나")
     sc = pd.DataFrame(story.ABUSE_SCOPE_DIFF,
@@ -1142,7 +1160,7 @@ elif PAGE == "validation":
             krds.alert("information", "LLM 태그만으로는 부족하다 — 실험으로 확인됐다",
                        "예측에는 태그 + 텍스트 피처를 함께 쓰고, "
                        "태그는 진단·경보의 ‘언어’로 쓴다. "
-                       "근거는 <code>docs/EXPERIMENTS.md</code> (실험 46건).")
+                       "근거는 <code>docs/EXPERIMENTS.md</code> (실험 47건).")
 
         mc = load("model_comparison")
         if not mc.empty:
