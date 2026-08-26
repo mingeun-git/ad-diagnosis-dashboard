@@ -352,6 +352,105 @@ a, a:visited { color: var(--k-primary60); }
 /* ───────────── 네이티브 알림(st.info/success/...) 도 KRDS 톤으로 ───────────── */
 [data-testid="stAlert"] { border-radius: var(--k-radius); border-left-width: 4px; font-size: 15px; }
 
+/* ───────────── 흐름도(단계 카드 체인) ───────────── */
+/* 통합 스토리라인의 [상황]→[EDA]→[가설]→[진단]→[해법] 같은 단계 서술을 그린다.
+   mermaid 를 쓸 수 없으므로(Streamlit 미지원) KRDS 카드 + 화살표로 대체한다. */
+.k-flow { display: flex; flex-direction: column; gap: 0; margin: 6px 0 10px; }
+.k-flow .k-fl {
+  background: var(--k-gray0); border: 1px solid var(--k-gray10);
+  border-left: 4px solid var(--k-primary50); border-radius: var(--k-radius);
+  padding: 14px 18px; box-shadow: 0 1px 2px var(--k-shadow1);
+}
+.k-flow .k-fl .k-fl-step {
+  display: inline-block; font-size: 12px; font-weight: 700; color: var(--k-primary60);
+  background: var(--k-primary5); border-radius: 4px; padding: 2px 8px; margin-bottom: 7px;
+}
+.k-flow .k-fl .k-fl-t { font-size: 17px; font-weight: 700; color: var(--k-gray95); line-height: 1.45; }
+.k-flow .k-fl .k-fl-s { font-size: 14px; color: var(--k-gray60); margin-top: 5px; line-height: 1.55; }
+.k-flow .k-farrow {
+  align-self: center; color: var(--k-gray30); font-size: 15px; line-height: 1;
+  padding: 7px 0;
+}
+
+/* ───────────── 가로 노드 다이어그램(플랫폼 구조 등) ───────────── */
+.k-nodes { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; margin: 8px 0 4px; }
+.k-nodes .k-node {
+  flex: 1 1 150px; background: var(--k-gray0); border: 1px solid var(--k-gray10);
+  border-top: 3px solid var(--k-gray20); border-radius: var(--k-radius);
+  padding: 14px 16px; box-shadow: 0 1px 2px var(--k-shadow1); min-width: 0;
+}
+.k-nodes .k-node .k-nd-t { font-size: 16px; font-weight: 700; color: var(--k-gray95); }
+.k-nodes .k-node .k-nd-s { font-size: 13px; color: var(--k-gray50); margin-top: 5px; line-height: 1.5; }
+.k-nodes .k-narrow {
+  flex: none; align-self: center; color: var(--k-gray30); font-size: 18px; font-weight: 700;
+}
+.k-node.t-primary   { border-top-color: var(--k-primary50); }
+.k-node.t-secondary { border-top-color: var(--k-secondary50); }
+.k-node.t-success   { border-top-color: var(--k-success50); }
+.k-node.t-danger    { border-top-color: var(--k-danger50); }
+.k-node.t-warning   { border-top-color: var(--k-warning50); }
+.k-node.t-gray      { border-top-color: var(--k-gray30); }
+
+/* ───────────── 자리표시(팀원 자료 대기) ───────────── */
+/* 완성된 척하지 않기 위해 일부러 **빗금 점선**으로 그린다. 화면에서 즉시 구분돼야 한다. */
+.k-ph {
+  border: 2px dashed var(--k-gray30); border-radius: var(--k-radius);
+  background: repeating-linear-gradient(135deg, var(--k-gray5) 0 12px,
+              var(--k-gray0) 12px 24px);
+  padding: 26px 28px; margin: 12px 0 16px;
+}
+.k-ph .k-ph-tag {
+  display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .03em;
+  color: var(--k-gray0); background: var(--k-gray60);
+  border-radius: 4px; padding: 3px 9px; margin-bottom: 11px;
+}
+.k-ph .k-ph-t { font-size: 19px; font-weight: 700; color: var(--k-gray80); line-height: 1.4; }
+.k-ph .k-ph-d { font-size: 15px; color: var(--k-gray60); margin-top: 8px; line-height: 1.6; }
+.k-ph ul { margin: 14px 0 0; padding-left: 0; list-style: none; }
+.k-ph li {
+  font-size: 14px !important; color: var(--k-gray60); padding: 7px 0 7px 22px;
+  border-top: 1px solid var(--k-gray10); position: relative; line-height: 1.5;
+}
+.k-ph li::before {
+  content: "□"; position: absolute; left: 2px; top: 6px; color: var(--k-gray40); font-size: 13px;
+}
+
+/* ───────────── 시스템 카드(문제 → 시스템 매핑) ───────────── */
+.k-sys {
+  background: var(--k-gray0); border: 1px solid var(--k-gray10);
+  border-radius: var(--k-radius); padding: 20px 22px; margin-bottom: 12px;
+  box-shadow: 0 1px 2px var(--k-shadow1); border-left: 5px solid var(--k-gray20);
+}
+.k-sys.t-primary { border-left-color: var(--k-primary50); }
+.k-sys.t-danger  { border-left-color: var(--k-danger50); }
+.k-sys.t-warning { border-left-color: var(--k-warning50); }
+.k-sys .k-sys-h { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.k-sys .k-sys-no { font-size: 22px; font-weight: 700; color: var(--k-gray30); }
+.k-sys .k-sys-n { font-size: 20px; font-weight: 700; color: var(--k-gray95); }
+.k-sys .k-sys-p {
+  font-size: 14px; color: var(--k-gray70); margin-top: 12px; line-height: 1.6;
+  background: var(--k-gray5); border-radius: 4px; padding: 10px 13px;
+}
+.k-sys .k-sys-p b.k-pt { color: var(--k-gray95); }
+.k-sys .k-sys-d { font-size: 15px; color: var(--k-gray80); margin-top: 11px; line-height: 1.6; }
+
+/* ───────────── 결론 콜아웃(굵은 한 문장) ───────────── */
+.k-quote {
+  border-left: 5px solid var(--k-primary50); background: var(--k-primary5);
+  border-radius: 0 var(--k-radius) var(--k-radius) 0;
+  padding: 16px 20px; margin: 14px 0 18px; font-size: 16px; line-height: 1.7;
+  color: var(--k-gray90);
+}
+.k-quote b { color: var(--k-primary70); }
+.k-quote.t-danger  { border-left-color: var(--k-danger50);  background: var(--k-danger5); }
+.k-quote.t-danger b  { color: var(--k-danger70); }
+.k-quote.t-warning { border-left-color: var(--k-warning50); background: var(--k-warning5); }
+.k-quote.t-warning b { color: var(--k-warning70); }
+.k-quote.t-success { border-left-color: var(--k-success50); background: var(--k-success5); }
+.k-quote.t-success b { color: var(--k-success70); }
+.k-quote.t-gray    { border-left-color: var(--k-gray40);    background: var(--k-gray5); }
+.k-quote.t-gray b    { color: var(--k-gray90); }
+
 /* ───────────── 푸터 ───────────── */
 .k-footer {
   margin-top: 44px; padding: 22px 24px; background: var(--k-gray90);
@@ -456,6 +555,55 @@ def rows(items: Iterable[tuple[str, str, str]], ranked: bool = True) -> None:
     _md(f'<div class="k-list">{"".join(out)}</div>')
 
 
+def flow(steps: Sequence[tuple[str, str, str]]) -> None:
+    """단계 흐름도. 원소 = (단계라벨, 제목, 부연). 제목·부연은 **HTML 허용**."""
+    out = []
+    for i, (step, title, sub) in enumerate(steps):
+        if i:
+            out.append('<div class="k-farrow">▼</div>')
+        s = f'<div class="k-fl-s">{sub}</div>' if sub else ""
+        out.append(f'<div class="k-fl"><span class="k-fl-step">{e(step)}</span>'
+                   f'<div class="k-fl-t">{title}</div>{s}</div>')
+    _md(f'<div class="k-flow">{"".join(out)}</div>')
+
+
+def nodes(items: Sequence[tuple[str, str, str]], arrow: str = "→") -> None:
+    """가로 노드 다이어그램. 원소 = (이름, 설명, 톤)."""
+    out = []
+    for i, (name, sub, t) in enumerate(items):
+        if i:
+            out.append(f'<div class="k-narrow">{e(arrow)}</div>')
+        s = f'<div class="k-nd-s">{sub}</div>' if sub else ""
+        out.append(f'<div class="k-node t-{e(t)}"><div class="k-nd-t">{e(name)}</div>{s}</div>')
+    _md(f'<div class="k-nodes">{"".join(out)}</div>')
+
+
+def placeholder(title: str, desc: str = "", items: Sequence[str] = (),
+                tag: str = "자료 대기") -> None:
+    """팀원 자료가 아직 없는 자리. **완성된 척하지 않는 것**이 이 컴포넌트의 목적이다."""
+    li = "".join(f"<li>{e(x)}</li>" for x in items)
+    ul = f"<ul>{li}</ul>" if li else ""
+    d = f'<div class="k-ph-d">{desc}</div>' if desc else ""
+    _md(f'<div class="k-ph"><span class="k-ph-tag">{e(tag)}</span>'
+        f'<div class="k-ph-t">{e(title)}</div>{d}{ul}</div>')
+
+
+def syscard(no: str, name: str, owner: str, problem_title: str, problem: str,
+            does: str, tone: str = "default", mine: bool = False) -> None:
+    """문제 → 시스템 매핑 카드."""
+    who = badge(("담당 · " if mine else "") + owner, "primary" if mine else "gray", square=True)
+    _md(f'<div class="k-sys t-{e(tone)}">'
+        f'<div class="k-sys-h"><span class="k-sys-no">{e(no)}</span>'
+        f'<span class="k-sys-n">{e(name)}</span>{who}</div>'
+        f'<div class="k-sys-p"><b class="k-pt">{e(problem_title)}</b> — {problem}</div>'
+        f'<div class="k-sys-d">{does}</div></div>')
+
+
+def quote(text: str, tone: str = "primary") -> None:
+    """결론 한 문장을 눈에 띄게. **HTML 허용**."""
+    _md(f'<div class="k-quote t-{e(tone)}">{text}</div>')
+
+
 def nav_brand(title: str, sub: str = "") -> None:
     s = f'<div class="k-nb-s">{e(sub)}</div>' if sub else ""
     _md(f'<div class="k-navbrand"><div class="k-nb-t">{e(title)}</div>{s}</div>')
@@ -475,6 +623,8 @@ GRADE_TONE = {"S": "primary", "A": "success", "B": "gray",
               "C": "warning", "D": "danger"}
 RISK_TONE = {"높음": "danger", "중간": "warning", "낮음": "success", "없음": "gray"}
 SEVERITY_TONE = {3: "danger", 2: "warning", 1: "information"}
+# 가설 판정 — '기각'을 실패색(danger)으로 칠하지 않는다. 기각도 결정에 기여한 결과이기 때문이다.
+VERDICT_TONE = {"지지": "success", "기각": "point", "근거부족": "gray"}
 
 
 def grade_badge(g: str) -> str:

@@ -1,8 +1,10 @@
+# ⚠️ 자동 생성물 — 직접 고치지 말 것 (원본: scripts/s08_dashboard.py, S08 이 덮어쓴다)
 # ⚠️ streamlit 은 1.50 이상이어야 한다.
 #    .streamlit/config.toml 의 fontFaces / baseRadius / chartCategoricalColors 등
-#    KRDS 테마 매핑에 쓰는 옵션이 1.46+ 에서 추가됐고, 로컬 검증도 1.50 에서 했다.
+#    KRDS 테마 매핑에 쓰는 옵션이 1.46+ 에서 추가됐다. (2026-08-16)
 streamlit>=1.50
 pandas>=2.0
 pyarrow>=14
+# BigQuery 모드용 — 2026-08-09 BQ 전환 완료로 주석 해제됨 (설치 완료)
 google-cloud-bigquery>=3.0
 db-dtypes>=1.0
