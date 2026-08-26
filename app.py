@@ -545,7 +545,7 @@ elif PAGE == "sys_abuse":
         {"label": "재현한 Device-Day", "value": "1,985,804", "tone": "primary",
          "sub": "팀원 값과 <b>정확히 일치</b>"},
         {"label": "정제 후 이상 Device", "value": "8,897", "unit": "명",
-         "tone": "warning", "sub": "전체의 0.97% · 마트 클릭의 <b>17.9%</b> 차지"},
+         "tone": "warning", "sub": "전체의 0.98% · 마트 클릭의 <b>17.9%</b> 차지"},
         {"label": "반복클릭 극단 Device", "value": "126", "unit": "명",
          "tone": "danger", "sub": "정제 전 1,138명 → <b>−88.9%</b>"},
     ])
@@ -613,6 +613,8 @@ elif PAGE == "sys_abuse":
                        for k, a, b, ok in story.ABUSE_BQ_CROSSCHECK],
                       columns=["항목", "BigQuery", "로컬", ""])
     st.dataframe(cc, width="stretch", hide_index=True)
+    krds.alert("information", "등급 일치율만 낮은 이유 — 결함이 아니라 정의 차이다",
+               story.ABUSE_BQ_LEVEL_GAP)
     krds.alert("warning", "그 과정에서 잡은 결함 — CTIT 분위수 계산 방식이 달랐다",
                story.ABUSE_BQ_DEFECT)
 
