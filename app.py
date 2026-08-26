@@ -544,8 +544,8 @@ elif PAGE == "sys_abuse":
          "tone": "success", "sub": RV["basis"]},
         {"label": "재현한 Device-Day", "value": "1,985,804", "tone": "primary",
          "sub": "팀원 값과 <b>정확히 일치</b>"},
-        {"label": "정제 후 이상 Device", "value": "8,569", "unit": "명",
-         "tone": "warning", "sub": "전체의 0.93% · 마트 클릭의 <b>18.0%</b> 차지"},
+        {"label": "정제 후 이상 Device", "value": "8,897", "unit": "명",
+         "tone": "warning", "sub": "전체의 0.97% · 마트 클릭의 <b>17.9%</b> 차지"},
         {"label": "반복클릭 극단 Device", "value": "126", "unit": "명",
          "tone": "danger", "sub": "정제 전 1,138명 → <b>−88.9%</b>"},
     ])
@@ -593,10 +593,33 @@ elif PAGE == "sys_abuse":
     krds.quote(story.ABUSE_SENSITIVITY_VERDICT, "success")
     krds.note(story.ABUSE_PERCENTILE_TEST)
 
-    krds.section("팀원 1 에게 남은 요청", "3건 → 1건으로 줄었다")
+    # ── ⑨-C-3 우리 BigQuery 로 이관
+    krds.section("우리 BigQuery 로 옮겨 왔다", "팀원 권한을 받는 대신, 우리 프로젝트에서 직접 돌린다")
+    krds.quote(story.ABUSE_BQ_WHY, "success")
+    bt = pd.DataFrame(story.ABUSE_BQ_TABLES, columns=["테이블", "규모", "비고"])
+    st.dataframe(bt, width="stretch", hide_index=True,
+                 column_config={"테이블": st.column_config.TextColumn(width="medium"),
+                                "비고": st.column_config.TextColumn(width="large")})
+    krds.note(story.ABUSE_BQ_ISOLATION)
+
+    krds.section("실행 결과 — 최종 Risk Level")
+    krds.cards([{"label": f"{lv}", "value": f"{dd:,}", "tone": tone,
+                 "sub": f"고유 Device <b>{dv:,}</b>"}
+                for lv, dd, dv, tone in story.ABUSE_BQ_RESULT])
+    krds.note(f"비용: {story.ABUSE_BQ_COST}")
+
+    krds.section("BigQuery ↔ 로컬 재현 대조")
+    cc = pd.DataFrame([(k, a, b, "✅" if ok else "❌")
+                       for k, a, b, ok in story.ABUSE_BQ_CROSSCHECK],
+                      columns=["항목", "BigQuery", "로컬", ""])
+    st.dataframe(cc, width="stretch", hide_index=True)
+    krds.alert("warning", "그 과정에서 잡은 결함 — CTIT 분위수 계산 방식이 달랐다",
+               story.ABUSE_BQ_DEFECT)
+
+    krds.section("팀원 1 에게 남은 요청", "3건 → 0건")
     for name, state, tone, why in story.ABUSE_REQUESTS:
-        krds.alert(tone if tone != "success" else "information",
-                   f"{name} — {state}", why)
+        krds.alert("information", f"{name} — {state}", why)
+    krds.quote(story.ABUSE_REQUESTS_NOTE, "success")
 
     # ── ⑨-D 범위 대조
     krds.section("두 시스템의 범위 대조", "어디까지 같고, 어디서 갈리고, 무엇을 맞췄나")
@@ -1160,7 +1183,7 @@ elif PAGE == "validation":
             krds.alert("information", "LLM 태그만으로는 부족하다 — 실험으로 확인됐다",
                        "예측에는 태그 + 텍스트 피처를 함께 쓰고, "
                        "태그는 진단·경보의 ‘언어’로 쓴다. "
-                       "근거는 <code>docs/EXPERIMENTS.md</code> (실험 47건).")
+                       "근거는 <code>docs/EXPERIMENTS.md</code> (실험 48건).")
 
         mc = load("model_comparison")
         if not mc.empty:
